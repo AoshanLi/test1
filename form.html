@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.error{
+				color: red;
+			}
+		</style>
+		
+		<script type="text/javascript" src="js/jquery-2.2.4.js" ></script>
+		<script type="text/javascript" src="plugin/jquery-validation-1.17.0/jquery.validate.min.js"></script>
+		<script type="text/javascript" src="plugin/jquery-validation-1.17.0/localization/messages_zh.min.js"></script>
+		<script type="text/javascript">
+		$(function(){
+			jQuery.validator.addMethod("pwd",function(value, element){
+				return /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9a-zA-Z]{6,10}$/.test(value);
+			},"错误啊");
+			
+			jQuery.validator.addMethod("email",function(value, element){
+				return /^[a-zA-Z0-9_\-]{1,}@[a-zA-Z0-9_\-]{1,}\.[a-zA-Z0-9_\-.]{1,}$/.test(value);
+			});
+			
+			$("form").validate({
+				rules:{
+					uname: {
+						required: true,
+						rangelength: [6,12]
+					},
+					tel: {
+						required: true,
+						
+					},
+					pwd: {
+						required: true,
+						pwd: true,
+//						minlength: 6,
+//						maxlength: 11
+					},
+					email: {
+						required: true
+					}
+				},
+				messages: {
+					uname: {
+						required: "用户名不能为空",
+						rangelength: "用户名只能是6-12位字符"
+					},
+					tel: {
+						required: "电话号码不能为空",
+						
+					},
+					pwd: {
+						required: "密码不能为空",
+						pwd: "必须是数字和字母组合！"
+//						minlength: "密码最少为6位",
+//						maxlength: "密码最多为11位"
+					},
+					email: {
+						required: "请输入正确邮箱格式(XXX@XXX.com)"
+					}
+				}
+			});
+		});
+		</script>
+	</head>
+
+	<body>
+		<form>
+			<div>
+				<label>用户名：</label>
+				<input type="text" name="uname" />
+			</div>
+			<div>
+				<label>用户手机号：</label>
+				<input type="text" name="tel" />
+			</div>
+			<div>
+				<label>密码：</label>
+				<input type="password" name="pwd" />
+			</div>
+			<div>
+				<label>邮箱：</label>
+				<input type="text" name="email" />
+			</div>
+			<div>
+				<button>提交</button>
+			</div>
+		</form>
+	</body>
+
+</html>
