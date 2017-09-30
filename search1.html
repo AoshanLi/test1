@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				text-align: center;
+			}
+			
+			.search_box {
+				display: inline-block;
+				height: 40px;
+				border: 2px solid #ff4040;
+			}
+			
+			.search_box input,
+			.search_box button {
+				border: none;
+				outline: none;
+			}
+			
+			.search_box input {
+				/*height: 37px;*/
+				width: 600px;
+				padding: 0 15px;
+				vertical-align: middle;
+				font-size: 14px;
+			}
+			
+			.search_box button {
+				height: 40px;
+				width: 150px;
+				background-color: #ff4040;
+				color: #fff;
+				font-size: 16px;
+				cursor: pointer;
+				letter-spacing: 3px;
+			}
+			
+			.his_search {
+				width: 630px;
+				height: 200px;
+				background: #ccc;
+				border: 1px solid #f8f8f8;
+				text-align: left;
+				display: none;
+			}
+			
+			.his_search span {
+				display: inline-block;
+				border: 1px solid #ccc;
+				padding: 5px 10px;
+				background: #fff;
+				margin: 5px;
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery-2.2.4.js"></script>
+		<script type="text/javascript" src="js/jquery.cookie.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				var his_cookis = $.cookie("HIS_COOKIS");
+				if(his_cookis != null) { //如果cookie有值，绑定到历史上
+					var his = his_cookis.split(",");
+					var html = "";
+					for(var i = 0; i < his.length; i++) {
+						html += '<a href=""><span>' + his[i] + '</span></a>';
+						//						$(".his_search").append('<a href=""><span>'+ his[i] +'</span></a>');
+					}
+					$(".his_search").html(his);
+				}
+				$(".search_box input").focus(function() {
+					$(".his_search").show();
+				});
+
+				$(".search_box input").blur(function() {
+					$(".his_search").hide();
+				});
+
+				//点击搜索
+				$(".search_box button").click(function() {
+					var searchText = $(this).prev().val().trim();
+					if(his_cookis != null) {
+						his_cookis = searchText + "," + his_cookis;
+					} else {
+						his_cookis = searchText;
+					}
+					//设置cookies值
+					if(searchText.length > 1) {
+						$.cookie("HIS_COOKIS", searchText);
+					}
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="search_box">
+			<input type="text" placeholder="收入商品名进行搜索" />
+			<button>搜索</button>
+			<div class="his_search">
+				<!--<a href="">
+					<span>测试</span>
+				</a>
+				<a href="">
+					<span>测试</span>
+				</a>
+				<a href="">
+					<span>测试</span>
+				</a>
+				<a href="">
+					<span>测试</span>
+				</a>-->
+			</div>
+		</div>
+	</body>
+
+</html>
